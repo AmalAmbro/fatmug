@@ -30,6 +30,8 @@ class PurchaseOrder(models.Model):
     items = models.JSONField(encoder=DjangoJSONEncoder)
     quantity = models.IntegerField()
     status = models.CharField(max_length=50, choices=status_options, default='pending')
+    # datetime when status becomes completed
+    completed_date = models.DateTimeField(null=True, blank=True)
     quality_rating = models.FloatField(null=True, blank=True)
     issue_date = models.DateTimeField()
     acknowledgment_date = models.DateTimeField(null=True, blank=True)
