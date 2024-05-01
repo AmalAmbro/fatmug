@@ -18,13 +18,18 @@ class Vendor(models.Model):
 
 
 class PurchaseOrder(models.Model):
+    status_options = (
+        ('pending', 'pending'),
+        ('completed', 'completed'),
+        ('cancelled', 'cancelled'),
+    )
     po_number = models.CharField(max_length=50, unique=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     order_date = models.DateTimeField(null=True, blank=True)
     delivery_date = models.DateTimeField(null=True, blank=True)
     items = models.JSONField(encoder=DjangoJSONEncoder)
     quantity = models.IntegerField()
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, choices=status_options, default='pending')
     quality_rating = models.FloatField(null=True, blank=True)
     issue_date = models.DateTimeField()
     acknowledgment_date = models.DateTimeField(null=True, blank=True)
